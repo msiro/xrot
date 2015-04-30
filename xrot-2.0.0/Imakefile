@@ -1,0 +1,82 @@
+#======================================================================
+#   xrot  ver.2.0.0
+#======================================================================
+
+#------ Signal sigaction() -------
+# Comment this out if you don't have sigaction()
+
+# SIGSET = -DSIG_SET
+
+#------ usleep() -----
+# Comment this out if you don't have usleep()
+
+# HAVE_NO_USLEEP = -DNOUSLEEP 
+
+#------ Shift Logical -------
+
+# SHIFT_LOGICAL = -DSHLOGIC
+
+#------ InputHint -------
+
+INPUTHINT = -DHINT_TRUE
+
+
+#------ record file -------
+
+# NORECORD = -DNOREC
+
+RECORDDIR = /usr/local/games/lib/xrot
+RECORDFILE = xrot_record
+
+#------ secure RECORD file -------
+
+##define SECURE_RECORDFILE
+
+#ifdef SECURE_RECORDFILE
+ SECURE = -DSECURE_RECORDFILE
+
+ XROT_ADMIN = games
+
+#endif
+
+#------ install directory -------
+
+# BINDIR = /usr/local/games
+
+#------ xpm library -------
+
+# XPMINCDIR = /usr/X11/include
+# XPMLIBDIR = /usr/X11/lib
+#XPMINCLUDE = -I$(XPMINCDIR)
+#LOCAL_LDFLAGS = -L$(XPMLIBDIR)
+
+XPMLIB = -lXpm	
+
+
+#---------------------------------------------------------------
+
+CC = gcc
+DEPLIBS = $(DEPXLIB)
+LOCAL_LIBRARIES = $(XLIB) $(XPMLIB) -lm
+RECFLAGS = -DRECDIR=\"$(RECORDDIR)\" -DRECFILE=\"$(RECORDFILE)\" 
+
+DEFINES = $(XPMINCLUDE) $(INPUTHINT) $(XSHM) $(SIGSET) $(HAVE_NO_USLEEP)\
+	  $(SHIFT_LOGICAL) $(RECFLAGS) $(NORECORD) $(SECURE)
+
+SRCS = xrot.c xwin.c check_sp.c title.c record.c
+OBJS = xrot.o xwin.o check_sp.o title.o record.o
+
+ComplexProgramTarget(xrot)
+
+#ifdef SECURE_RECORDFILE
+install::
+	@if [ -d $(RECORDDIR) ]; then chmod 755 $(RECORDDIR); \
+	else mkdirhier $(RECORDDIR); chmod 755 $(RECORDDIR); fi
+	chown $(XROT_ADMIN) $(BINDIR)/xrot
+	chown $(XROT_ADMIN) $(RECORDDIR)
+	chmod 4755 $(BINDIR)/xrot
+#else
+install::
+	@if [ -d $(RECORDDIR) ]; then chmod 777 $(RECORDDIR); \
+	else mkdirhier $(RECORDDIR); chmod 777 $(RECORDDIR); fi
+#endif

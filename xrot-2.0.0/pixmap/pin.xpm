@@ -1,0 +1,21 @@
+/* XPM */
+static char * pin_xpm[] = {
+"10 10 8 1",
+" 	c #FBEEFBEEFBEE",
+".	c #DF7DFFFFFFFF",
+"X	c #618571C669A6",
+"o	c #8E38B6DAC71B",
+"O	c #596586179658",
+"+	c #B6DADF7DDF7D",
+"@	c #38E349245144",
+"#	c #041004100410",
+"  .....   ",
+"..   ..  X",
+"  ..    XX",
+" .ooOo+XXX",
+" .+OOo+XXX",
+"   ++ooXXX",
+"   +++o@X@",
+" ..@@@@XX@",
+"  @@@@@@@@",
+" @@#@@X@@@"};
